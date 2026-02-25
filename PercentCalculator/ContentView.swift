@@ -51,8 +51,8 @@ struct ContentView: View {
                             .font(.title3.monospacedDigit())
                             .foregroundStyle(.primary)
                         Button("Go") { calculatePercentage() }
-                            .buttonStyle(.borderedProminent)
                             .controlSize(.regular)
+                            .percentCalcGlassButton()
                     }
                 }
 
@@ -73,8 +73,8 @@ struct ContentView: View {
                             .font(.title3.monospacedDigit())
                             .foregroundStyle(.primary)
                         Button("Go") { calculateWhatPercent() }
-                            .buttonStyle(.borderedProminent)
                             .controlSize(.regular)
+                            .percentCalcGlassButton()
                     }
                 }
 
@@ -99,8 +99,8 @@ struct ContentView: View {
                         }
                         .font(.title3.monospacedDigit())
                         Button("Go") { calculateIncreaseDecrease() }
-                            .buttonStyle(.borderedProminent)
                             .controlSize(.regular)
+                            .percentCalcGlassButton()
                     }
                 }
 
