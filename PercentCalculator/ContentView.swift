@@ -21,6 +21,9 @@ struct ContentView: View {
     // Text stripping
     @State private var textToStrip = ""
 
+    // UI state
+    @State private var showAbout = false
+
     // Copy button states
     @State private var copiedPercent = false
     @State private var copiedReverse = false
@@ -112,6 +115,21 @@ struct ContentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding()
         .frame(minWidth: 700, minHeight: 310)
+        .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    showAbout = true
+                } label: {
+                    Image(systemName: "info.circle")
+                        .foregroundStyle(.secondary)
+                }
+                .popover(isPresented: $showAbout) {
+                    Text("Copyright Piero Sierra 2026")
+                        .font(.callout)
+                        .padding()
+                }
+            }
+        }
 
     }
 
