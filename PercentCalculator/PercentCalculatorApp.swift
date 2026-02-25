@@ -21,8 +21,9 @@ struct PercentCalculatorApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .background(Color(nsColor: .windowBackgroundColor))
         }
         .windowToolbarStyle(.unified)
-        .defaultSize(width: 700, height: 320)
+        .defaultSize(width: 700, height: 310)
     }
 }

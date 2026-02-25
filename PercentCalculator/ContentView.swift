@@ -108,14 +108,10 @@ struct ContentView: View {
             // MARK: - Right Column: Strip Formatting
             StripFormattingCard(textToStrip: $textToStrip)
                 .frame(minWidth: 250)
-                .frame(maxWidth: 250)
-                .frame(maxHeight: 280)
-                .frame(minHeight: 280)
-
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding()
-        .frame(minWidth: 700, minHeight: 320)
-        .frame(maxWidth: 700, maxHeight: 320)
+        .frame(minWidth: 700, minHeight: 310)
 
     }
 
