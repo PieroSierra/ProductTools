@@ -29,6 +29,12 @@ struct ContentView: View {
     @State private var copiedReverse = false
     @State private var copiedChange = false
 
+    // Focus management
+    enum Field: Int, CaseIterable {
+        case percentage, value, part, whole, initial, final_, textStrip
+    }
+    @FocusState private var focusedField: Field?
+
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
             // MARK: - Left Column: Calculators
@@ -39,11 +45,15 @@ struct ContentView: View {
                         TextField("Value", text: $percentage)
                             .textFieldStyle(.plain)
                             .underlineField()
+                            .numericField($percentage)
+                            .focused($focusedField, equals: .percentage)
                             .frame(width: 50)
                         Text("% of")
                         TextField("Value", text: $value)
                             .textFieldStyle(.plain)
                             .underlineField()
+                            .numericField($value)
+                            .focused($focusedField, equals: .value)
                             .frame(width: 60)
                             .onSubmit { calculatePercentage() }
                         Spacer()
@@ -61,11 +71,15 @@ struct ContentView: View {
                         TextField("Part", text: $part)
                             .textFieldStyle(.plain)
                             .underlineField()
+                            .numericField($part)
+                            .focused($focusedField, equals: .part)
                             .frame(width: 60)
                         Text("is what % of")
                         TextField("Whole", text: $whole)
                             .textFieldStyle(.plain)
                             .underlineField()
+                            .numericField($whole)
+                            .focused($focusedField, equals: .whole)
                             .frame(width: 60)
                             .onSubmit { calculateWhatPercent() }
                         Spacer()
@@ -84,11 +98,15 @@ struct ContentView: View {
                         TextField("Initial", text: $initialValue)
                             .textFieldStyle(.plain)
                             .underlineField()
+                            .numericField($initialValue)
+                            .focused($focusedField, equals: .initial)
                             .frame(width: 60)
                         Text("to")
                         TextField("Final", text: $finalValue)
                             .textFieldStyle(.plain)
                             .underlineField()
+                            .numericField($finalValue)
+                            .focused($focusedField, equals: .final_)
                             .frame(width: 60)
                             .onSubmit { calculateIncreaseDecrease() }
                         Spacer()
@@ -109,12 +127,16 @@ struct ContentView: View {
             .frame(minWidth: 390, maxWidth: 390)
 
             // MARK: - Right Column: Strip Formatting
-            StripFormattingCard(textToStrip: $textToStrip)
+            StripFormattingCard(textToStrip: $textToStrip, focusedField: $focusedField)
                 .frame(minWidth: 250)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding()
         .frame(minWidth: 700, minHeight: 310)
+        .onKeyPress(.escape) {
+            clearAll()
+            return .handled
+        }
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button {
@@ -154,6 +176,25 @@ struct ContentView: View {
         .percentCalcGlassEffect()
     }
 
+    // MARK: - Clear All
+
+    func clearAll() {
+        percentage = ""
+        value = ""
+        result = "-"
+        part = ""
+        whole = ""
+        percentResult = "-"
+        initialValue = ""
+        finalValue = ""
+        changeResult = "-"
+        multiplierResult = "-"
+        textToStrip = ""
+        copiedPercent = false
+        copiedReverse = false
+        copiedChange = false
+    }
+
     // MARK: - Calculations
 
     func calculatePercentage() {
@@ -179,6 +220,19 @@ struct ContentView: View {
         multiplierResult = String(format: "%.1fx", calculatedMultiplier)
     }
 
+}
+
+// MARK: - Numeric Field Modifier
+
+extension View {
+    func numericField(_ text: Binding<String>) -> some View {
+        self.onChange(of: text.wrappedValue) {
+            let filtered = text.wrappedValue.filter { "0123456789.-".contains($0) }
+            if filtered != text.wrappedValue {
+                text.wrappedValue = filtered
+            }
+        }
+    }
 }
 
 // MARK: - Underline Field Modifier
@@ -224,6 +278,7 @@ struct CopyButton: View {
 
 struct StripFormattingCard: View {
     @Binding var textToStrip: String
+    var focusedField: FocusState<ContentView.Field?>.Binding
     @State private var copied = false
 
     var body: some View {
@@ -256,6 +311,11 @@ struct StripFormattingCard: View {
                 TextEditor(text: $textToStrip)
                     .font(.body)
                     .scrollContentBackground(.hidden)
+                    .focused(focusedField, equals: .textStrip)
+                    .onKeyPress(.tab) {
+                        focusedField.wrappedValue = .percentage
+                        return .handled
+                    }
                     .onChange(of: textToStrip) {
                         stripFormatting()
                     }
