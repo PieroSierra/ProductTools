@@ -31,9 +31,39 @@ struct PercentCalculatorApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .background(Color(nsColor: .windowBackgroundColor))
+                .background {
+                    if #available(macOS 26.0, *) {
+                        Rectangle()
+                            .fill(.clear)
+                            .glassEffect(.regular, in: Rectangle())
+                            .ignoresSafeArea()
+                    } else {
+                        Rectangle()
+                            .fill(.ultraThinMaterial)
+                            .ignoresSafeArea()
+                    }
+                }
+                .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
+                .background(TransparentWindowAccessor())
         }
         .windowToolbarStyle(.unified)
         .defaultSize(width: 700, height: 310)
     }
+}
+
+/// Makes the hosting NSWindow translucent so .thinMaterial shows the desktop through.
+struct TransparentWindowAccessor: NSViewRepresentable {
+    func makeNSView(context: Context) -> NSView {
+        let view = NSView()
+        DispatchQueue.main.async {
+            if let window = view.window {
+                window.isOpaque = false
+                window.backgroundColor = .clear
+                window.titlebarAppearsTransparent = true
+                window.titlebarSeparatorStyle = .none
+            }
+        }
+        return view
+    }
+    func updateNSView(_ nsView: NSView, context: Context) {}
 }

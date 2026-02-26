@@ -5,18 +5,18 @@ struct ContentView: View {
     // Percentage of value
     @State private var percentage = ""
     @State private var value = ""
-    @State private var result = "-"
+    @State private var result = ""
 
     // What percent
     @State private var part = ""
     @State private var whole = ""
-    @State private var percentResult = "-"
+    @State private var percentResult = ""
 
     // Percentage change
     @State private var initialValue = ""
     @State private var finalValue = ""
-    @State private var changeResult = "-"
-    @State private var multiplierResult = "-"
+    @State private var changeResult = " "
+    @State private var multiplierResult = " "
 
     // Text stripping
     @State private var textToStrip = ""
@@ -165,7 +165,7 @@ struct ContentView: View {
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                 Spacer()
-                if copyText != "-" && !copyText.isEmpty {
+                if copyText != " " && !copyText.isEmpty {
                     CopyButton(text: copyText, copied: copied)
                 }
             }
@@ -181,14 +181,14 @@ struct ContentView: View {
     func clearAll() {
         percentage = ""
         value = ""
-        result = "-"
+        result = ""
         part = ""
         whole = ""
-        percentResult = "-"
+        percentResult = ""
         initialValue = ""
         finalValue = ""
-        changeResult = "-"
-        multiplierResult = "-"
+        changeResult = " "
+        multiplierResult = " "
         textToStrip = ""
         copiedPercent = false
         copiedReverse = false
