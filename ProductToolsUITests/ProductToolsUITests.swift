@@ -1,13 +1,13 @@
 //
-//  PercentCalculatorUITests.swift
-//  PercentCalculatorUITests
+//  ProductToolsUITests.swift
+//  ProductToolsUITests
 //
 //  Created by Piero Sierra on 31/08/2024.
 //
 
 import XCTest
 
-final class PercentCalculatorUITests: XCTestCase {
+final class ProductToolsUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

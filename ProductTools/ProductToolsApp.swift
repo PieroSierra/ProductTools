@@ -27,7 +27,7 @@ extension View {
 }
 
 @main
-struct PercentCalculatorApp: App {
+struct ProductToolsApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

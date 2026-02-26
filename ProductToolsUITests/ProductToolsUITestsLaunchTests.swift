@@ -1,13 +1,13 @@
 //
-//  PercentCalculatorUITestsLaunchTests.swift
-//  PercentCalculatorUITests
+//  ProductToolsUITestsLaunchTests.swift
+//  ProductToolsUITests
 //
 //  Created by Piero Sierra on 31/08/2024.
 //
 
 import XCTest
 
-final class PercentCalculatorUITestsLaunchTests: XCTestCase {
+final class ProductToolsUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

@@ -1,4 +1,4 @@
-# Liquid Glass Redesign — PercentCalculator
+# Liquid Glass Redesign — ProductTools
 
 **Date:** 2026-02-25
 **Platform:** macOS only (macOS 15.0 minimum, Liquid Glass on macOS 26+)
@@ -42,6 +42,6 @@ Each card: VStack with title label (.secondary), input row (labels + plain text 
 
 ## Files Changed
 
-1. `PercentCalculatorApp.swift` — rewrite (~30 lines)
+1. `ProductToolsApp.swift` — rewrite (~30 lines)
 2. `ContentView.swift` — rewrite (card layout, same calc logic)
 3. `project.pbxproj` — deployment target bump
